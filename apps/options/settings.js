@@ -84,6 +84,21 @@ module.exports = (() => {
             text: '字符串编解码',
             contexts: ['page', 'selection', 'editable']
         },
+        MENU_IFRAME_URL_TRANSFORM_FSSC: {
+            icon: '★',
+            text: 'iframeUrl替换fssc',
+            contexts: ['page', 'selection', 'editable']
+        },
+        MENU_IFRAME_URL_TRANSFORM: {
+            icon: '★',
+            text: 'iframeUrl替换',
+            contexts: ['page', 'selection', 'editable']
+        },
+        MENU_IFRAME_URL_TRANSFORM_LOGLEVEL4: {
+            icon: '★',
+            text: 'iframeUrl替换-logLevel4',
+            contexts: ['page', 'selection', 'editable']
+        },
         MENU_JSON_FORMAT: {
             icon: '★',
             text: 'JSON格式化',

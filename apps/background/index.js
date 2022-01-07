@@ -438,6 +438,50 @@ var BgPageInstance = (function () {
                             _openFileAndRun(tab, MSG_TYPE.EN_DECODE, (typeof txt === 'object') ? txt[0] : txt);
                         });
                     },
+                    MENU_IFRAME_URL_TRANSFORM_FSSC:  function(info, tab) {
+                        chrome.tabs.executeScript(tab.id, {
+                            code: '(' + (function (pInfo) {
+                                console.log(document.getElementsByTagName('iframe')[0].src)
+                                return document.getElementsByTagName('iframe')[0].src;
+                            }).toString() + ')(' + JSON.stringify(info) + ')',
+                            allFrames: false
+                        }, function (url) {
+                            let _url =  (typeof url === 'object') ? url[0] : url;
+                            _url = 'localhost:8080/' + _url.split('fssc/')[1];
+                            chrome.tabs.create({
+                                url: _url,
+                                active: true
+                            });
+                        })
+                    },
+                    MENU_IFRAME_URL_TRANSFORM: function(info, tab) {
+                        /**
+                            editable: false
+                            frameId: 292
+                            frameUrl: "http://192.168.55.39:8080/billdesigner/designer_rt.html#/pageDesigner_rt?pageDesignerId=11ec6e9c285c16ddb36531c624d01987&pageDataId=11ec6ef5f4502a3ebc0ffd5fbcfb2f3f&isHistory=true&appId=ecs&extendParams=%7B%22billDefineId%22%3A%2211ebf19950f33b14bcb21dc4c180a4c8%22,%22scene%22%3A%22WRITE%22,%22bizAppId%22%3A%2211ebe61cae5bb2d99000f75d65547cf5%22,%22title%22%3A%22undefined%22,%22applicantDepartmentId%22%3A%2288b1312255eb11e9940bb73524c3d1d0%22,%22visible%22%3A%22true%22,%22backURLParams%22%3A%22%7B%5C%22billDefineId%5C%22%3A%5C%2211ebf19950f33b14bcb21dc4c180a4c8%5C%22%7D%22,%22billTemplateType%22%3A%22INTEGRATED%22,%22windowStyle%22%3A%22%5Bobject%20Object%5D%22%7D&token=11ec6f5a4bfcef1f85737586ed461743&TOKEN=11ec6f5a4bfcef1f85737586ed461743&tDelta=-162&onOff=true&hideHeader=true"
+                            menuItemId: 61
+                            pageUrl: "http://192.168.55.39:8080/ecs-console/index.html#/outLink"
+                            parentMenuItemId: 32
+                            selectionText: "费用报销单-PICC"
+                         */
+
+                        if (info.frameUrl) {
+                            let url = 'localhost:8080/' + info.frameUrl.split('billdesigner/')[1];
+                            chrome.tabs.create({
+                                url: window.top._addLog ? url + '&logLevel=4' : url,
+                                active: true
+                            });
+                        }
+                    },
+                    MENU_IFRAME_URL_TRANSFORM_LOGLEVEL4: function(info, tab) {
+                        if (info.frameUrl) {
+                            let url = 'localhost:8080/' + info.frameUrl.split('billdesigner/')[1];
+                            chrome.tabs.create({
+                                url: url + '&logLevel=4',
+                                active: true
+                            });
+                        }
+                    },
                     MENU_JSON_FORMAT: function (info, tab) {
                         chrome.tabs.executeScript(tab.id, {
                             code: '(' + (function (pInfo) {
