@@ -84,19 +84,24 @@ module.exports = (() => {
             text: '字符串编解码',
             contexts: ['page', 'selection', 'editable']
         },
+        MENU_OPEN_IFRAME: {
+            icon: '★',
+            text: 'open Iframe',
+            contexts: ['page', 'selection', 'editable']
+        },
         MENU_IFRAME_URL_TRANSFORM_FSSC: {
             icon: '★',
-            text: 'iframeUrl替换fssc',
+            text: 'iframeUrl替换-fssc',
             contexts: ['page', 'selection', 'editable']
         },
-        MENU_IFRAME_URL_TRANSFORM: {
+        MENU_IFRAME_URL_TRANSFORM_BILL_DESIGNER: {
             icon: '★',
-            text: 'iframeUrl替换',
+            text: 'iframeUrl替换-billdesigner',
             contexts: ['page', 'selection', 'editable']
         },
-        MENU_IFRAME_URL_TRANSFORM_LOGLEVEL4: {
+        MENU_IFRAME_URL_TRANSFORM_BILL_DESIGNER_LOGLEVEL4: {
             icon: '★',
-            text: 'iframeUrl替换-logLevel4',
+            text: 'iframeUrl替换-billdesigner & logLevel4',
             contexts: ['page', 'selection', 'editable']
         },
         MENU_JSON_FORMAT: {

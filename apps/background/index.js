@@ -438,10 +438,19 @@ var BgPageInstance = (function () {
                             _openFileAndRun(tab, MSG_TYPE.EN_DECODE, (typeof txt === 'object') ? txt[0] : txt);
                         });
                     },
+                    MENU_OPEN_IFRAME: function(info, tab) {
+                        if (info.frameUrl) {
+                            chrome.tabs.create({
+                                url: info.frameUrl,
+                                active: true
+                            });
+                        }
+                    },
                     MENU_IFRAME_URL_TRANSFORM_FSSC:  function(info, tab) {
                         chrome.tabs.executeScript(tab.id, {
                             code: '(' + (function (pInfo) {
-                                console.log(document.getElementsByTagName('iframe')[0].src)
+                                // console.log(document.getSelection());
+                                // console.log(document.activeElement);
                                 return document.getElementsByTagName('iframe')[0].src;
                             }).toString() + ')(' + JSON.stringify(info) + ')',
                             allFrames: false
@@ -454,7 +463,7 @@ var BgPageInstance = (function () {
                             });
                         })
                     },
-                    MENU_IFRAME_URL_TRANSFORM: function(info, tab) {
+                    MENU_IFRAME_URL_TRANSFORM_BILL_DESIGNER: function(info, tab) {
                         /**
                             editable: false
                             frameId: 292
@@ -473,7 +482,7 @@ var BgPageInstance = (function () {
                             });
                         }
                     },
-                    MENU_IFRAME_URL_TRANSFORM_LOGLEVEL4: function(info, tab) {
+                    MENU_IFRAME_URL_TRANSFORM_BILL_DESIGNER_LOGLEVEL4: function(info, tab) {
                         if (info.frameUrl) {
                             let url = 'localhost:8080/' + info.frameUrl.split('billdesigner/')[1];
                             chrome.tabs.create({
