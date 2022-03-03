@@ -447,6 +447,21 @@ var BgPageInstance = (function () {
                         }
                     },
                     MENU_IFRAME_URL_TRANSFORM_FSSC:  function(info, tab) {
+                        let myBookmark
+                        // 自动修改title为2的bookmark，这里为了方便，没严格的将chrome.tabs.executeScript写到bookmarks.search的回调里
+                        chrome.bookmarks.search('l2', function(res) {
+                            if (res && res[0] && res[0].title === 'l2') {
+                                myBookmark = res[0]
+                                /**
+                                    dateAdded: 1587461913712
+                                    id: "4370"
+                                    index: 6
+                                    parentId: "1"
+                                    title: "l2"
+                                    url: "http://localhost:8089/?v=1
+                                 */
+                            }
+                        });
                         chrome.tabs.executeScript(tab.id, {
                             code: '(' + (function (pInfo) {
                                 // console.log(document.getSelection());
@@ -456,7 +471,15 @@ var BgPageInstance = (function () {
                             allFrames: false
                         }, function (url) {
                             let _url =  (typeof url === 'object') ? url[0] : url;
-                            _url = 'localhost:8080/' + _url.split('fssc/')[1];
+                            _url = 'localhost:8089/' + _url.split('fssc/')[1];
+
+
+                            myBookmark && chrome.bookmarks.update(
+                                myBookmark.id,
+                                {
+                                    url: `http://${_url}`
+                                }
+                            )
                             chrome.tabs.create({
                                 url: _url,
                                 active: true

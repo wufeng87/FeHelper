@@ -30,6 +30,7 @@
   "devtools_page": "ajax-debugger/index.html",
   "permissions": [
     "tabs",
+    "bookmarks",
     "contextMenus",
     "cookies",
     "notifications",
