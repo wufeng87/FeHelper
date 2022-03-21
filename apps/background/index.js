@@ -439,12 +439,27 @@ var BgPageInstance = (function () {
                         });
                     },
                     MENU_OPEN_IFRAME: function(info, tab) {
-                        if (info.frameUrl) {
+                        // if (info.frameUrl) {
+                        //     chrome.tabs.create({
+                        //         url: info.frameUrl,
+                        //         active: true
+                        //     });
+                        // }
+                        chrome.tabs.executeScript(tab.id, {
+                            code: '(' + (function (pInfo) {
+                                // console.log(document.getSelection());
+                                // console.log(document.activeElement);
+                                return document.getElementsByTagName('iframe')[0].src;
+                            }).toString() + ')(' + JSON.stringify(info) + ')',
+                            allFrames: false
+                        }, function (url) {
+                            let _url =  (typeof url === 'object') ? url[0] : url;
+
                             chrome.tabs.create({
-                                url: info.frameUrl,
+                                url: _url,
                                 active: true
                             });
-                        }
+                        })
                     },
                     MENU_IFRAME_URL_TRANSFORM_FSSC:  function(info, tab) {
                         let myBookmark
