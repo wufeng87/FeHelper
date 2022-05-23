@@ -461,6 +461,22 @@ var BgPageInstance = (function () {
                             });
                         })
                     },
+                    // 打开单据对应的模板设置页面
+                    MENU_IFRAME_DEV_OPEN_TEMPLATE_SETTING: function(info, tab) {
+                        chrome.tabs.executeScript(
+                            tab.id,
+                            {
+                                frameId: info.frameId, 
+                                code: '(' + (function (pInfo) {
+                                    console.log('here we r')
+                                    window.postMessage({type: 'DEV_OPEN_TEMPLATE_SETTING'})
+
+                                }).toString() + ')(' + JSON.stringify(info) + ')',
+                                // file: "content.js"
+                            },
+                            function(data) { console.log(data[0]); }
+                        );
+                    },
                     MENU_IFRAME_URL_TRANSFORM_FSSC:  function(info, tab) {
                         let myBookmark
                         // 自动修改title为2的bookmark，这里为了方便，没严格的将chrome.tabs.executeScript写到bookmarks.search的回调里
@@ -481,7 +497,9 @@ var BgPageInstance = (function () {
                             code: '(' + (function (pInfo) {
                                 // console.log(document.getSelection());
                                 // console.log(document.activeElement);
-                                return document.getElementsByTagName('iframe')[0].src;
+                                var iframes = Array.from(document.getElementsByTagName('iframe'));
+                                var fsscIframe = iframes.filter( iframe => iframe.src && iframe.src.indexOf('fssc') != -1)[0]
+                                return fsscIframe.src;
                             }).toString() + ')(' + JSON.stringify(info) + ')',
                             allFrames: false
                         }, function (url) {

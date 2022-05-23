@@ -89,6 +89,11 @@ module.exports = (() => {
             text: 'open Iframe',
             contexts: ['page', 'selection', 'editable']
         },
+        MENU_IFRAME_DEV_OPEN_TEMPLATE_SETTING: {
+            icon: '★',
+            text: '打开单据对应的模板设置页面',
+            contexts: ['page', 'selection', 'editable']
+        },
         MENU_IFRAME_URL_TRANSFORM_FSSC: {
             icon: '★',
             text: 'iframeUrl替换-fssc',
